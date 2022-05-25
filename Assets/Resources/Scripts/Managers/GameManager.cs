@@ -26,6 +26,12 @@ public class GameManager : MonoBehaviour
     private Ctrl_UIMainMenu _mainMenuUIControl;
     private So_BrickPos[] _levels;
     private int _currentLevelIndex;
+
+    internal void SpawnRandomPowerUp(Vector3 position)
+    {
+        _gamePlayControl.SpawnRandomPowerUp(position);
+    }
+
     public PlayerData PlayerData
     {
         get
@@ -139,6 +145,11 @@ public class GameManager : MonoBehaviour
     public int GetHighScore()
     {
         return PlayerPrefs.GetInt(STR_PREFHIGHSCROE, 0);
+    }
+
+    public void GetExtraLife()
+    {
+        _playerData.Lives += 1;
     }
 }
 

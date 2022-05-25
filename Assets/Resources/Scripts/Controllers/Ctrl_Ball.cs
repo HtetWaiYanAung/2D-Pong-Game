@@ -19,6 +19,14 @@ public class Ctrl_Ball : MonoBehaviour
         float y = Random.Range(0.6f, 0.8f);
         _rb.velocity = (new Vector2(x,y)).normalized * _ballSpeed;
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Ctrl_Brick brickControl = collision.gameObject.GetComponent<Ctrl_Brick>();
+        if (brickControl != null)
+        {
+            brickControl.ReceiveDamage(_ballDamage);
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

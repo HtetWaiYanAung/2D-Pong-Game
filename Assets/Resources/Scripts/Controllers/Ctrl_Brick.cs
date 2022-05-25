@@ -11,9 +11,9 @@ public class Ctrl_Brick : MonoBehaviour
             return _scores;
         }
     }
-    [SerializeField] private Ctrl_GamePlay _gamePlayControl;
     [SerializeField] private int _hitPoints;
     [SerializeField] private int _scores;
+    [SerializeField] private float _powerUpChance = 0;
     [SerializeField] private SpriteRenderer _sr;
 
     private int _currentHitPoints;
@@ -30,6 +30,10 @@ public class Ctrl_Brick : MonoBehaviour
         if (_currentHitPoints <= 0)
         {
             DestroyBrick();
+            if(_powerUpChance > 0 && Random.Range(0f, 100f)<=_powerUpChance)
+            {
+                GameManager.Instance.SpawnRandomPowerUp(transform.position);
+            }
         }
         else
         {

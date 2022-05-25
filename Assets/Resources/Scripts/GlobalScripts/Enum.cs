@@ -12,3 +12,10 @@ public enum E_ResultType : int
     LevelCompleted,
     GameOver,
 }
+
+public enum E_PowerUpType : int
+{
+    ExtraLive,
+    ExtraBall,
+    BallsImmunity,
+}

@@ -74,11 +74,11 @@ public static class BrickColorExtension
             case BrickType.Red:
                 return Brick("Pfb_BrickNormal");
             case BrickType.Green:
-                return Brick("Pfb_BrickNormal");
+                return Brick("Pfb_BrickPowerUp");
             case BrickType.Blue:
                 return Brick("Pfb_BrickTough");
             case BrickType.Yellow:
-                return Brick("Pfb_BrickTough");
+                return Brick("Pfb_BrickPassThrough");
         }
         return Brick("Pfb_BrickWhite"); ;
     }

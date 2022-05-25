@@ -11,9 +11,9 @@ TagManager:
   - Ball
   - Water
   - UI
-  - 
-  - 
-  - 
+  - PowerUp
+  - Paddle
+  - BotBorder
   - 
   - 
   - 
