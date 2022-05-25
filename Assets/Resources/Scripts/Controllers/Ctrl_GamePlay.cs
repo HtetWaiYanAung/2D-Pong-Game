@@ -7,6 +7,7 @@ using System.Linq;
 public class Ctrl_GamePlay : MonoBehaviour
 {
     public Transform TfRightX;
+    [SerializeField] private BricksManager _brickManager;
     [SerializeField] private Ctrl_UIGamePlay _uiControl;
     [SerializeField] private Ctrl_Ball _ballControl;
     [SerializeField] private GameObject _bricksParent;
@@ -14,6 +15,7 @@ public class Ctrl_GamePlay : MonoBehaviour
 
     private List<Ctrl_Brick> _bricks;
     private List<Ctrl_Ball> _balls;
+    private So_BrickPos _currentLevel;
 
     internal void BallLost(Ctrl_Ball ballControl)
     {
@@ -24,30 +26,34 @@ public class Ctrl_GamePlay : MonoBehaviour
             GameManager.Instance.LiveLost();
             _uiControl.UpdateUI();
         }
+        Debug.Log("Ball Lost");
     }
 
-    public void StartPlay()
+    public void StartLevel(So_BrickPos level)
     {
-        _ballControl.gameObject.SetActive(false);
+        Debug.Log("Starting Level : " + level.name);
+        _currentLevel = level;
         _uiControl.UpdateUI();
         _uiControl.HideResultPanel();
-        Ctrl_Ball[] remainingBalls = _ballsParent.transform.GetComponentsInChildren<Ctrl_Ball>();
-        for (int i = 0; i < remainingBalls.Length; i++)
-        {
-            Destroy(remainingBalls[i]);
-        }
-        _balls = new List<Ctrl_Ball>();
-
-         SpawnBall();
-        _bricks = _bricksParent.transform.GetComponentsInChildren<Ctrl_Brick>().ToList();
+        ClearLevel();
+        _brickManager.Level = _currentLevel;
+        _bricks = _brickManager.GenerateBricks();
+        DelayedSpawnBall();
     }
 
-    public void SpawnBall()
+    public void DelayedSpawnBall()
     {
+        StartCoroutine(nameof(SpawnBallCoroutine));
+    }
+
+    private IEnumerator SpawnBallCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
         Ctrl_Ball spawnedBall = Instantiate(_ballControl, _ballsParent.transform, true);
         spawnedBall.Spawn();
         _balls.Add(spawnedBall);
     }
+
 
     public void BrickDestroyed(Ctrl_Brick destroyedBrick)
     {
@@ -57,13 +63,42 @@ public class Ctrl_GamePlay : MonoBehaviour
 
         if (_bricks.Count <= 0)
         {
-            GameManager.Instance.LevelCompleted();
-            _uiControl.ShowResultPanel(true);
+            E_ResultType result = GameManager.Instance.LevelCompleted();
+            ClearLevel();
+            _uiControl.ShowResultPanel(result);
         }
     }
 
     public void GameOver()
     {
-        _uiControl.ShowResultPanel(false);
+        ClearLevel();
+        _uiControl.ShowResultPanel(E_ResultType.GameOver);
+    }
+
+    private void ClearLevel()
+    {
+        if (_balls == null)
+        {
+            _balls = new List<Ctrl_Ball>();
+        }
+        Debug.Log("Balls Count " + _balls.Count);
+        for (int i = 0; i < _balls.Count; i++)
+        {
+            Destroy(_balls[i].gameObject);
+        }
+        _balls.Clear();
+
+        if (_bricks == null)
+        {
+            _bricks = new List<Ctrl_Brick>();
+        }
+        for (int i = 0; i < _bricks.Count; i++)
+        {
+            Destroy(_bricks[i].gameObject);
+        }
+        _bricks.Clear();
+        _ballControl.gameObject.SetActive(false);
+
+        StopAllCoroutines();
     }
 }

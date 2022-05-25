@@ -14,17 +14,25 @@ public class Ctrl_UIGamePlay : MonoBehaviour
     [SerializeField] private Text _txtResult;
     [SerializeField] private Text _txtResultPanelScore;
     [SerializeField] private Button _btnToMainMenu;
+    [SerializeField] private Button _btnToNextLevel;
 
     private const string STRFMT_LIVES = "Lives = {0}";
     private const string STRFMT_SCORES = "Scores = {0}";
     private const string STRFMT_LEVEL = "Level = {0}";
 
-    private const string STR_PLAYER_WIN = "Level Completed";
-    private const string STR_PLAYER_LOSE = "Game Over";
+    private const string STR_PLAYER_WIN = "Congratulations! All levels cleared.";
+    private const string STR_LEVEL_COMPLETED = "Level Completed.";
+    private const string STR_PLAYER_LOSE = "Game Over.";
 
     private void Awake()
     {
         _btnToMainMenu.onClick.AddListener(OnClickToMainMenu);
+        _btnToNextLevel.onClick.AddListener(OnClickToNextLevel);
+    }
+
+    private void OnClickToNextLevel()
+    {
+        GameManager.Instance.GoToNextLevel();
     }
 
     private void OnClickToMainMenu()
@@ -43,10 +51,31 @@ public class Ctrl_UIGamePlay : MonoBehaviour
         _goResultPanel.SetActive(false);
     }
 
-    public void ShowResultPanel(bool isPlayerWin)
+    public void ShowResultPanel(E_ResultType resultType)
     {
         _txtResultPanelScore.text = string.Format(STRFMT_SCORES, GameManager.Instance.PlayerData.Scores);
-        _txtResult.text = isPlayerWin ? STR_PLAYER_WIN : STR_PLAYER_LOSE;
+        string resultString = string.Empty;
+        switch (resultType)
+        {
+            case E_ResultType.PlayerWin:
+                resultString = STR_PLAYER_WIN;
+                _btnToMainMenu.gameObject.SetActive(true);
+                _btnToNextLevel.gameObject.SetActive(false);
+                break;
+            case E_ResultType.LevelCompleted:
+                resultString = STR_LEVEL_COMPLETED;
+                _btnToMainMenu.gameObject.SetActive(false);
+                _btnToNextLevel.gameObject.SetActive(true);
+                break;
+            case E_ResultType.GameOver:
+                _btnToMainMenu.gameObject.SetActive(true);
+                _btnToNextLevel.gameObject.SetActive(false);
+                resultString = STR_PLAYER_LOSE;
+                break;
+            default:
+                break;
+        }
+        _txtResult.text = resultString;
         _goResultPanel.SetActive(true);
     }
 }

@@ -18,11 +18,14 @@ public class GameManager : MonoBehaviour
     private const string STR_MAINMENUSCENE = "Scn_MainMenu";
     private const string STR_GAMEPLAYSCENE = "Scn_GamePlay";
     private const string STR_PREFHIGHSCROE = "High_Score";
+    private const string PATH_LEVEL_SO = "ScriptableObjects/Levels";
     private const int INT_DEFAULTLIVES = 3;
 
     private PlayerData _playerData;
     private Ctrl_GamePlay _gamePlayControl;
     private Ctrl_UIMainMenu _mainMenuUIControl;
+    private So_BrickPos[] _levels;
+    private int _currentLevelIndex;
     public PlayerData PlayerData
     {
         get
@@ -44,14 +47,19 @@ public class GameManager : MonoBehaviour
             return;
         }
         _instance = this;
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+        _levels = Resources.LoadAll<So_BrickPos>(PATH_LEVEL_SO);
+    }
+
+    internal void GoToNextLevel()
+    {
+        _gamePlayControl.StartLevel(_levels[_currentLevelIndex]);
     }
 
     public void Play()
     {
         SceneManager.LoadScene(STR_GAMEPLAYSCENE, LoadSceneMode.Single);
         _playerData = new PlayerData { Lives = INT_DEFAULTLIVES, Scores = 0, Level = 1 };
-        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
-        
     }
 
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
@@ -59,7 +67,8 @@ public class GameManager : MonoBehaviour
         if(scene.name == STR_GAMEPLAYSCENE)
         {
             _gamePlayControl = GameObject.FindObjectOfType<Ctrl_GamePlay>();
-            _gamePlayControl.StartPlay();
+            _gamePlayControl.StartLevel(_levels[0]);
+            _currentLevelIndex = 0;
             return;
         }
 
@@ -95,14 +104,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(nameof(DelayBallSpawn));
+            _gamePlayControl.DelayedSpawnBall();
         }
-    }
-
-    private IEnumerator DelayBallSpawn()
-    {
-        yield return new WaitForSeconds(1f);
-        _gamePlayControl.SpawnBall();
     }
 
     public void BrickDestoryed(Ctrl_Brick destroyedBrick)
@@ -115,14 +118,22 @@ public class GameManager : MonoBehaviour
         _gamePlayControl.BrickDestroyed(destroyedBrick);
     }
 
-    public void LevelCompleted()
+    public E_ResultType LevelCompleted()
     {
-        Debug.Log("Level Completed");
+        E_ResultType result = E_ResultType.LevelCompleted;
+        
         int currentHighScore = GetHighScore();
         if (_playerData.Scores > currentHighScore)
         {
             PlayerPrefs.SetInt(STR_PREFHIGHSCROE, _playerData.Scores);
         }
+
+        _currentLevelIndex += 1;
+        if (_currentLevelIndex >= _levels.Length)
+        {
+            result = E_ResultType.PlayerWin;
+        }
+        return result;
     }
 
     public int GetHighScore()
