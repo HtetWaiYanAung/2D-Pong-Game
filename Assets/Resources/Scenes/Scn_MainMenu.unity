@@ -604,7 +604,7 @@ GameObject:
   - component: {fileID: 1084589345}
   - component: {fileID: 1084589344}
   m_Layer: 5
-  m_Name: Title
+  m_Name: TxtTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1013,7 +1013,7 @@ GameObject:
   - component: {fileID: 2089869571}
   - component: {fileID: 2089869570}
   m_Layer: 5
-  m_Name: TxtPlay
+  m_Name: TxtQuit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

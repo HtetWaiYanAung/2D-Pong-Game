@@ -1,28 +1,29 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using Random = UnityEngine.Random;
 
 public class Ctrl_GamePlay : MonoBehaviour
 {
     public Transform TfRightX;
-    [SerializeField] private BricksManager _brickManager;
+    [SerializeField] private Transform _tfPowerUpParent;
+    [SerializeField] private GameObject _bricksParent;
+    [SerializeField] private GameObject _ballsParent;
+    [SerializeField] private Ctrl_LevelLayout _levelLayoutControl;
     [SerializeField] private Ctrl_UIGamePlay _uiControl;
     [SerializeField] private Ctrl_Ball _ballControl;
     [SerializeField] private Ctrl_Paddle _paddleControl;
     [SerializeField] private Ctrl_BotBorder _botBorderControl;
-    [SerializeField] private Transform _tfPowerUpParent;
     [SerializeField] private Ctrl_PowerUp _powerUpExtraLiveControl;
     [SerializeField] private Ctrl_PowerUp _powerUpExtraBallControl;
     [SerializeField] private Ctrl_PowerUp _powerUpBallImmunityControl;
-    [SerializeField] private GameObject _bricksParent;
-    [SerializeField] private GameObject _ballsParent;
+    [SerializeField] private int _extraBallChance = 75;
+    [SerializeField] private int _ballsImmunityChance = 20;
+    [SerializeField] private int _extraBallMultiplier = 3;
 
     private List<Ctrl_Brick> _bricks;
     private List<Ctrl_Ball> _balls;
-    private So_BrickPos _currentLevel;
+    private So_LevelData _currentLevel;
 
     internal void BallLost(Ctrl_Ball ballControl)
     {
@@ -33,18 +34,17 @@ public class Ctrl_GamePlay : MonoBehaviour
             GameManager.Instance.LiveLost();
             _uiControl.UpdateUI();
         }
-        Debug.Log("Ball Lost");
     }
 
     internal void SpawnRandomPowerUp(Vector3 position)
     {
-        int rng = Random.Range(0,101);
+        int rng = Random.Range(0, 101);
         E_PowerUpType powerUpType;
-        if(rng < 75)
+        if (rng < _extraBallChance)
         {
             powerUpType = E_PowerUpType.ExtraBall;
         }
-        else if (rng < 95)
+        else if (rng < (_extraBallChance + _ballsImmunityChance))
         {
             powerUpType = E_PowerUpType.BallsImmunity;
         }
@@ -52,7 +52,7 @@ public class Ctrl_GamePlay : MonoBehaviour
         {
             powerUpType = E_PowerUpType.ExtraLive;
         }
-        
+
         Ctrl_PowerUp powerUpContrl;
         switch (powerUpType)
         {
@@ -71,15 +71,14 @@ public class Ctrl_GamePlay : MonoBehaviour
         powerUpContrl.gameObject.SetActive(true);
     }
 
-    public void StartLevel(So_BrickPos level)
+    public void StartLevel(So_LevelData level)
     {
-        Debug.Log("Starting Level : " + level.name);
         _currentLevel = level;
         _uiControl.UpdateUI();
         _uiControl.HideResultPanel();
         ClearLevel();
-        _brickManager.Level = _currentLevel;
-        _bricks = _brickManager.GenerateBricks();
+        _levelLayoutControl.Level = _currentLevel;
+        _bricks = _levelLayoutControl.GenerateBricks();
         DelayedSpawnBall();
     }
 
@@ -125,7 +124,6 @@ public class Ctrl_GamePlay : MonoBehaviour
 
     public void PowerUpTrigger(E_PowerUpType powerType)
     {
-        Debug.Log(powerType.ToString() + " Triggered");
         switch (powerType)
         {
             case E_PowerUpType.ExtraLive:
@@ -133,7 +131,7 @@ public class Ctrl_GamePlay : MonoBehaviour
                 _uiControl.UpdateUI();
                 break;
             case E_PowerUpType.ExtraBall:
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < _extraBallMultiplier; i++)
                 {
                     InstantSpawnBall();
                 }
@@ -152,7 +150,6 @@ public class Ctrl_GamePlay : MonoBehaviour
         {
             _balls = new List<Ctrl_Ball>();
         }
-        Debug.Log("Balls Count " + _balls.Count);
         for (int i = 0; i < _balls.Count; i++)
         {
             Destroy(_balls[i].gameObject);

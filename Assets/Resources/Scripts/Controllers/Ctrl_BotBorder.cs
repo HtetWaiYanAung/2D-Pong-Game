@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Ctrl_BotBorder : MonoBehaviour
@@ -8,14 +5,13 @@ public class Ctrl_BotBorder : MonoBehaviour
     [SerializeField] private BoxCollider2D _boxCollider;
     [SerializeField] private Ctrl_GamePlay _gamePlayControl;
     [SerializeField] private GameObject _goImmunityBar;
-
-    private float _TriggerDisableTimer = 3f;
+    [SerializeField] private float _triggerDisableTimer = 3f;
     private float _timer;
     private bool _startCountdown = false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Ctrl_Ball ballControl = collision.gameObject.GetComponent<Ctrl_Ball>();
-        if(ballControl != null)
+        if (ballControl != null)
         {
             _gamePlayControl.BallLost(ballControl);
         }
@@ -25,7 +21,7 @@ public class Ctrl_BotBorder : MonoBehaviour
     {
         _timer = 0;
         _startCountdown = false;
-        if(_goImmunityBar != null)
+        if (_goImmunityBar != null)
         {
             _goImmunityBar.SetActive(false);
         }
@@ -33,7 +29,7 @@ public class Ctrl_BotBorder : MonoBehaviour
 
     private void Update()
     {
-        if(_startCountdown && Time.time > _timer)
+        if (_startCountdown && Time.time > _timer)
         {
             _startCountdown = false;
             _boxCollider.isTrigger = true;
@@ -48,12 +44,12 @@ public class Ctrl_BotBorder : MonoBehaviour
     {
         _boxCollider.isTrigger = false;
         _startCountdown = true;
-        _timer = Time.time + _TriggerDisableTimer;
+        _timer = Time.time + _triggerDisableTimer;
         if (_goImmunityBar != null)
         {
             _goImmunityBar.SetActive(true);
         }
     }
 
-    
+
 }

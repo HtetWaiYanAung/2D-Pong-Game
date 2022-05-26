@@ -1,16 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class Ctrl_UIGamePlay : MonoBehaviour
 {
     [SerializeField] private Text _txtLives;
     [SerializeField] private Text _txtScores;
     [SerializeField] private Text _txtLevel;
-
     [SerializeField] private GameObject _goResultPanel;
     [SerializeField] private TMP_Text _txtResult;
     [SerializeField] private Text _txtResultPanelScore;

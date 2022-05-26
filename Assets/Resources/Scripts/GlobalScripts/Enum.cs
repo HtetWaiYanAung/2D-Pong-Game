@@ -1,21 +1,21 @@
-public enum BrickType
+public enum E_BrickType : int
 {
-    Red = 1,
-    Yellow = 3,
-    Green = 4,
-    Blue = 5,
+    ToughBrick = 1,
+    PassThroughBrick = 3,
+    NormalBrick = 4,
+    PowerUpBrick = 5,
 }
 
 public enum E_ResultType : int
 {
-    PlayerWin,
-    LevelCompleted,
-    GameOver,
+    PlayerWin = 1,
+    LevelCompleted = 2,
+    GameOver = 3,
 }
 
 public enum E_PowerUpType : int
 {
-    ExtraLive,
-    ExtraBall,
-    BallsImmunity,
+    ExtraLive = 1,
+    ExtraBall = 2,
+    BallsImmunity = 3,
 }

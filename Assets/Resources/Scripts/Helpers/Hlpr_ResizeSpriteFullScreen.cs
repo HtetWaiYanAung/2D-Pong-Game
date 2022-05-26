@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 public class Hlpr_ResizeSpriteFullScreen : MonoBehaviour
 {
-
-    // Start is called before the first frame update
+    private const float _yRatio = 0.8f;
     void Start()
     {
         Resize();
@@ -27,7 +24,8 @@ public class Hlpr_ResizeSpriteFullScreen : MonoBehaviour
         transform.localScale = xWidth;
 
         Vector3 yHeight = transform.localScale;
-        yHeight.y = worldScreenHeight / height * 0.8f;
+        yHeight.y = worldScreenHeight / height * _yRatio;
         transform.localScale = yHeight;
-;    }
+        ;
+    }
 }

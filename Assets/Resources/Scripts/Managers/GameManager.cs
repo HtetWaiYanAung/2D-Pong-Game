@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,7 +21,7 @@ public class GameManager : MonoBehaviour
     private PlayerData _playerData;
     private Ctrl_GamePlay _gamePlayControl;
     private Ctrl_UIMainMenu _mainMenuUIControl;
-    private So_BrickPos[] _levels;
+    private So_LevelData[] _levels;
     private int _currentLevelIndex;
 
     internal void SpawnRandomPowerUp(Vector3 position)
@@ -54,7 +51,7 @@ public class GameManager : MonoBehaviour
         }
         _instance = this;
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
-        _levels = Resources.LoadAll<So_BrickPos>(PATH_LEVEL_SO);
+        _levels = Resources.LoadAll<So_LevelData>(PATH_LEVEL_SO);
     }
 
     internal void GoToNextLevel()
