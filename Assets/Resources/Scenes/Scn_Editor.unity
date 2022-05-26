@@ -783,6 +783,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cca0e4efb058e3439325831d02b749a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _boxCollider: {fileID: 0}
+  _gamePlayControl: {fileID: 0}
+  _goImmunityBar: {fileID: 0}
 --- !u!4 &681672792 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6602594441339793414, guid: 28fcb4b8ff497d842869c1338b80b061, type: 3}
@@ -841,8 +844,8 @@ MonoBehaviour:
   rows: 30
   columns: 34
   spacing: 0.35
-  brickPrefab: {fileID: 6602594441339793416, guid: 8b991f4026913614e9596a067ca381e4, type: 3}
-  so_BrickPos: {fileID: 11400000, guid: b990950e1d3fdf74ea4062dac6b18ce9, type: 2}
+  brickPrefab: {fileID: 6602594441339793416, guid: ee1292a66d34f004197640137a45730a, type: 3}
+  so_BrickPos: {fileID: 0}
   brickType: 1
 --- !u!1 &722264101
 GameObject:
@@ -1708,7 +1711,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1745910332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1809,6 +1812,12 @@ MonoBehaviour:
   _txtLives: {fileID: 426437510}
   _txtScores: {fileID: 335427749}
   _txtLevel: {fileID: 107034075}
+  _goResultPanel: {fileID: 0}
+  _txtResult: {fileID: 0}
+  _txtResultPanelScore: {fileID: 0}
+  _btnToMainMenu: {fileID: 0}
+  _btnToNextLevel: {fileID: 0}
+  _btnBack: {fileID: 0}
 --- !u!1 &1845645690
 GameObject:
   m_ObjectHideFlags: 0
@@ -2288,7 +2297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2058737360
 Transform:
   m_ObjectHideFlags: 0
@@ -2315,8 +2324,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a7dd2cf9dbb19e44bc504eee12fac0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TfRightX: {fileID: 0}
+  _brickManager: {fileID: 0}
   _uiControl: {fileID: 1745910336}
   _ballControl: {fileID: 1047700877}
+  _paddleControl: {fileID: 0}
+  _botBorderControl: {fileID: 0}
+  _tfPowerUpParent: {fileID: 0}
+  _powerUpExtraLiveControl: {fileID: 0}
+  _powerUpExtraBallControl: {fileID: 0}
+  _powerUpBallImmunityControl: {fileID: 0}
+  _bricksParent: {fileID: 0}
+  _ballsParent: {fileID: 0}
 --- !u!1001 &4705439018767746044
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2327,6 +2346,10 @@ PrefabInstance:
     - target: {fileID: 4705439018379835892, guid: ff7a94cb49482a5439c286dfc2fa5757, type: 3}
       propertyPath: m_Name
       value: Paddle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705439018379835892, guid: ff7a94cb49482a5439c286dfc2fa5757, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4705439018379835894, guid: ff7a94cb49482a5439c286dfc2fa5757, type: 3}
       propertyPath: m_RootOrder

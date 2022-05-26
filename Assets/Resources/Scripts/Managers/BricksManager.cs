@@ -72,15 +72,15 @@ public static class BrickColorExtension
         switch (brickColor)
         {
             case BrickType.Red:
-                return Brick("Pfb_BrickNormal");
-            case BrickType.Green:
-                return Brick("Pfb_BrickPowerUp");
-            case BrickType.Blue:
                 return Brick("Pfb_BrickTough");
+            case BrickType.Green:
+                return Brick("Pfb_BrickNormal");
+            case BrickType.Blue:
+                return Brick("Pfb_BrickPowerUp");
             case BrickType.Yellow:
                 return Brick("Pfb_BrickPassThrough");
         }
-        return Brick("Pfb_BrickWhite"); ;
+        return Brick("Pfb_BrickNormal");
     }
     static GameObject Brick(string name)
     {

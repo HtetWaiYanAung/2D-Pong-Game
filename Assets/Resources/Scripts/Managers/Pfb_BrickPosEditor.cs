@@ -19,7 +19,15 @@ public class Pfb_BrickPosEditor : MonoBehaviour
     private void Start()
     {
         ResetLevel();
+        for(int i = 0; i < so_BrickPos.BrickColorList.Count; i++)
+        {
+            if (so_BrickPos.BrickColorList[i] == BrickType.Yellow)
+            {
+                so_BrickPos.BrickColorList[i] = BrickType.Blue;
+            }
+        }
     }
+
 
     private void Update()
     {
@@ -35,7 +43,9 @@ public class Pfb_BrickPosEditor : MonoBehaviour
                 so_BrickPos.x.Add(hit.transform.localPosition.x);
                 so_BrickPos.y.Add(hit.transform.localPosition.y);
                 so_BrickPos.BrickColorList.Add(brickType);
+#if UNITY_EDITOR
                 EditorUtility.SetDirty(this);
+#endif
             }
         }
     }

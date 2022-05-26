@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36e5e8dc6eeec344b6bbd621589aea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gamePlayControl: {fileID: 0}
-  _hitPoints: 3
+  _hitPoints: 2
   _scores: 2
+  _powerUpChance: 0
   _sr: {fileID: 4089640298373680141}
 --- !u!212 &4089640298373680141
 SpriteRenderer:

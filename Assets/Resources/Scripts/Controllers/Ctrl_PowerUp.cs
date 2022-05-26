@@ -10,20 +10,20 @@ public class Ctrl_PowerUp : MonoBehaviour
 
     private void Start()
     {
-        switch (_powerUpType)
-        {
-            case E_PowerUpType.ExtraLive:
-                _sr.color = Color.green;
-                break;
-            case E_PowerUpType.ExtraBall:
-                _sr.color = Color.red;
-                break;
-            case E_PowerUpType.BallsImmunity:
-                _sr.color = Color.blue;
-                break;
-            default:
-                break;
-        }
+        //switch (_powerUpType)
+        //{
+        //    case E_PowerUpType.ExtraLive:
+        //        _sr.color = Color.green;
+        //        break;
+        //    case E_PowerUpType.ExtraBall:
+        //        _sr.color = Color.red;
+        //        break;
+        //    case E_PowerUpType.BallsImmunity:
+        //        _sr.color = Color.blue;
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -135,6 +135,7 @@ public class GameManager : MonoBehaviour
         }
 
         _currentLevelIndex += 1;
+        _playerData.Level += 1;
         if (_currentLevelIndex >= _levels.Length)
         {
             result = E_ResultType.PlayerWin;

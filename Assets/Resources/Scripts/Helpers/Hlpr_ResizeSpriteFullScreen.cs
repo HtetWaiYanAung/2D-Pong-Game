@@ -27,8 +27,7 @@ public class Hlpr_ResizeSpriteFullScreen : MonoBehaviour
         transform.localScale = xWidth;
 
         Vector3 yHeight = transform.localScale;
-        yHeight.y = worldScreenHeight / height;
+        yHeight.y = worldScreenHeight / height * 0.8f;
         transform.localScale = yHeight;
-        transform.localScale *= 0.8f;
 ;    }
 }

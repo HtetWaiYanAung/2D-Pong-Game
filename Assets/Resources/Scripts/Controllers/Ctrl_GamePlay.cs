@@ -40,15 +40,14 @@ public class Ctrl_GamePlay : MonoBehaviour
     {
         int rng = Random.Range(0,101);
         E_PowerUpType powerUpType;
-        if(rng < 60)
+        if(rng < 75)
         {
             powerUpType = E_PowerUpType.ExtraBall;
         }
-        else if (rng < 80)
+        else if (rng < 95)
         {
             powerUpType = E_PowerUpType.BallsImmunity;
         }
-            
         else
         {
             powerUpType = E_PowerUpType.ExtraLive;
@@ -134,7 +133,10 @@ public class Ctrl_GamePlay : MonoBehaviour
                 _uiControl.UpdateUI();
                 break;
             case E_PowerUpType.ExtraBall:
-                InstantSpawnBall();
+                for (int i = 0; i < 3; i++)
+                {
+                    InstantSpawnBall();
+                }
                 break;
             case E_PowerUpType.BallsImmunity:
                 _botBorderControl.DisableTriggerTemporary();
